@@ -1,0 +1,77 @@
+clc, close, clear
+
+disp('1) Ejercicio 1')
+disp('2) Ejercicio 1, Inciso a')
+disp('3) Ejercicio 1, Inciso b')
+disp('4) Ejercicio 1, Inciso c')
+disp('5) Ejercicio 1, Inciso d')
+disp('6) Ejercicio 5')
+
+select_options = input('seleccionar operación:');
+
+switch select_options
+    case 1
+    %Ejercicio (1)
+    t = linspace(-2,7.5,1e4); %Vector de tiempo
+	u = @(t) t >=0; %Escalón generado a partir de una función anonima 
+    x = 2.*t.*u(t+1)-2*(t-1).*u(t-1)+ u(t-2)-(t-2).*u(t-2)+ (t-4).*u(t-4)-(t-5).*u(t-5)+(t-7).*u(t-7)+u(t-7); %Escritura de la funcón escrita en terminos de escalones
+    plot(t,x,'LineWidth',2);ylim([-2.5 3.5]);xlim([-1.5 7.5]);grid on 
+    title('Ejercicio 1'), xlabel('Tiempo(s)'),ylabel('Amplitud(V)')
+    
+    case 2
+    %Ejercicio 2
+    %a)
+    t = linspace(-1,3,1e4); %Vector de tiempo
+    u = @(t) t >=0; %Escalón generado a partir de una función anonima
+    x_1 = u(t);
+    x_2 = u(t/3-0.5/3);
+    plot(t,x_1,t,x_2,'LineWidth',2),ylim([-0.1 1.1]),grid on,title('Ejercicio(a)'),...
+        legend('u(t)','u(1/3(t-0.5))'),xlabel('Tiempo(s)'),ylabel('Amplitud')
+    
+    case 3
+    %b)
+    t = linspace(-9,9,1e4);
+    u = @(t) t >=0; %Escalón generado a partir de una función anonima
+    x_1 = u(t);
+    x_2 = 3*heaviside(-t-3);
+    plot(t,x_1,t,x_2,'LineWidth',2),ylim([-0.1 3]),grid on,title('Ejercicio (b)'),...
+        legend('u(t)','3u(3-t))'),xlabel('Tiempo(s)'),ylabel('Amplitud(V)')
+    
+    case 4
+    %c)
+    t = linspace(-9,9,1e4);
+    u = @(t) t >=0; %Escalón generado a partir de una función anonima
+    x_1 = u(t);
+    x_2 = 5*u(-(3/5)*t-3/25);
+    plot(t,x_1,t,x_2,'LineWidth',2),ylim([-0.1 5.1]),grid on,title('Ejercicio (c)'),...
+    legend('u(t)','5u(-(3/5)t-3/25))'),xlabel('Tiempo(s)'),ylabel('Amplitud(V)')
+
+     case 5
+    %d)
+    t = linspace(-3,3,1e4);
+    u = @(t) t >=0; %Escalón generado a partir de una función anonima
+    x_1 = u(t);
+    x_2 = 7*u(6*t+12);
+    plot(t,x_1,t,x_2,'LineWidth',2),ylim([-0.1 7.5]),grid on,title('Ejercicio (d)'),...
+        legend('u(t)','7u(6t-12)'),xlabel('Tiempo(s)'),ylabel('Amplitud(V)')
+
+    case 6
+    %5)
+    t = linspace(-2,6,1e4);
+    u = @(t) t >=0; %Escalón generado a partir de una función anonima
+    %Función triangulo unitario
+    tri = @(t) t.*u(t)-(t-1).*u(t-1)-(t-1).*u(t-1)+(t-2).*u(t-2); %Función triangulo unitario en terminos de escalones
+    x_3 = 2*tri(t) + tri(t/2-1) + u(t-3) + (3*t-6).*u(3*t-6);
+
+    %Función impulso
+    h=0.0001; %longitud de onda
+    timer = -3.5:h:0; %Vector de tiempo para el impulso
+    x = heaviside(timer + 3); %Función escalon por librerias de matlab
+    df = diff(x)/h; %La derivada del escalón es el impulso
+
+
+    plot(timer(1:end-1),df,'b',t,x_3,'b','LineWidth',2),ylim([-1.1 10]),xlim([-3.5 8]),grid on,title('Ejercicio 5'),...
+        xlabel('Tiempo(s)'),ylabel('Amplitud(V)')
+
+end
+
